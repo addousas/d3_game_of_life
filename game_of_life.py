@@ -5,6 +5,7 @@ class Cell:
 		self.next_state = False
 		self.id_x = id_x
 		self.id_y = id_y
+		self.pair = (id_x,id_y)
 
 class Grid:
 	def __init__(self, rows, cols):
@@ -31,14 +32,22 @@ class Grid:
 			for row_id in range(self.rows):
 				neighbors = []
 				cell = self.grid[col_id][row_id]
-				neighbors.append(self.grid[col_id  % self.cols ][row_id % self.rows])
-				neighbors.append(self.grid[col_id  % self.cols ][row_id % self.rows])
-				neighbors.append(self.grid[col_id  % self.cols ][row_id % self.rows])
-				neighbors.append(self.grid[col_id  % self.cols ][row_id % self.rows])
-				neighbors.append(self.grid[col_id  % self.cols ][row_id % self.rows])
-				neighbors.append(self.grid[col_id  % self.cols ][row_id % self.rows])
-				neighbors.append(self.grid[col_id  % self.cols ][row_id % self.rows])
-				neighbors.append(self.grid[col_id  % self.cols ][row_id % self.rows])
+				# self.get_neighbors()
+
+	def get_neighbors(self,row_id,col_id):
+			neighbors = []
+			cell = self.grid[col_id][row_id]
+			neighbors.append(self.grid[col_id  % self.cols ][(row_id + 1) % self.rows].pair)
+			neighbors.append(self.grid[col_id  % self.cols ][(row_id  - 1) % self.rows].pair)
+			
+			neighbors.append(self.grid[(col_id  + 1) % self.cols ][row_id % self.rows].pair)
+			neighbors.append(self.grid[(col_id   -1) % self.cols ][row_id % self.rows].pair)
+			neighbors.append(self.grid[(col_id  + 1) % self.cols ][(row_id + 1) % self.rows].pair)
+			neighbors.append(self.grid[(col_id  + 1) % self.cols ][(row_id  - 1)% self.rows].pair)
+			neighbors.append(self.grid[(col_id  - 1) % self.cols ][(row_id + 1) % self.rows].pair)
+			neighbors.append(self.grid[(col_id  - 1)% self.cols ][(row_id - 1)% self.rows].pair)
+			return neighbors
+
 
 
 				
@@ -46,4 +55,8 @@ class Grid:
 	def show(self):
 		pass
 
+test = Grid(3,3)
+test.create()
+example = test.get_neighbors(1,1)
+print (example)
 
